@@ -1,0 +1,7 @@
+class LoginViewModel{
+
+  void login(){
+
+  }
+
+}

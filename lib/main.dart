@@ -12,11 +12,11 @@ Future<void> main() async{
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  // TODO : navigate to home page
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Note App',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
