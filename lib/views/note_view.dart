@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:note_app/components/note_card.dart';
 import 'package:note_app/res/colors.dart';
 import 'package:note_app/view_model/note_view_model.dart';
+import 'package:note_app/views/login_view.dart';
 import 'package:note_app/views/new_note_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -55,6 +56,8 @@ class _NoteViewState extends State<NoteView> {
               ),
               IconButton(
                 onPressed: () {
+                  FirebaseAuth.instance.signOut();
+                  Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginView()));
                   /// TODO: Logout
                 },
                 icon: Icon(
