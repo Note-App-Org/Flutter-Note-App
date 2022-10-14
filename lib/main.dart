@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:note_app/view_model/new_note_view_model.dart';
 import 'package:note_app/view_model/note_view_model.dart';
 import 'package:note_app/views/note_view.dart';
 import 'package:provider/provider.dart';
@@ -12,17 +13,18 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => NoteViewModel(),
-      child: const MyApp(),
-    ),
+    MultiProvider(providers: [
+      ChangeNotifierProvider(
+        create: (_) => NoteViewModel(),
+      ),
+    ],child: const MyApp(),),
+
   );
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // TODO : navigate to home page
   @override
   Widget build(BuildContext context) {
     return Consumer<NoteViewModel>(builder: (BuildContext context, NoteViewModel provider, _) {
@@ -33,6 +35,9 @@ class MyApp extends StatelessWidget {
         theme: ThemeData(
           canvasColor: CustomColors.backgroundLightColor,
           cardColor: CustomColors.cardColor,
+          cardTheme:const CardTheme(
+              shadowColor: Colors.black
+          ),
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: CustomColors.primaryColor,
           ),
@@ -49,11 +54,18 @@ class MyApp extends StatelessWidget {
               color: Colors.white,
               fontSize: 18.0,
             ),
+            headline4: TextStyle(
+            color: Colors.black,
+            fontSize: 18.0,
+          ),
           ),
         ),
         darkTheme: ThemeData(
           canvasColor: CustomColors.backgroundDarkColor,
           cardColor: CustomColors.cardColor,
+          cardTheme:const CardTheme(
+            shadowColor: Colors.white54
+          ),
           colorScheme: ColorScheme.fromSwatch().copyWith(
             primary: CustomColors.primaryColor,
           ),
@@ -66,6 +78,10 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,fontSize: 20.0,
             ),
             headline3: TextStyle(
+              color: Colors.white,
+              fontSize: 18.0,
+            ),
+            headline4: TextStyle(
               color: Colors.white,
               fontSize: 18.0,
             ),

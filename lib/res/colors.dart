@@ -12,11 +12,11 @@ class CustomColors{
   static const Map<int,Color> notesColors = {
     1: Color(0xFF3369FF),
     2: Color(0xFFFFDA47),
-    3: Color(0xFFFFFFFF),
-    4: Color(0xFFAE3B76),
-    5: Color(0xFF0AEBAF),
-    6: Color(0xFFFF7746),
-    7: Color(0xFF0E121B),
+    3: Color(0xFFAE3B76),
+    4: Color(0xFF0AEBAF),
+    5: Color(0xFFFF7746),
+    6: Color(0xFFFF1458),
+    7: Color(0xFFF9A874),
   };
 
 }

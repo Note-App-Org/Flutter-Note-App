@@ -13,7 +13,7 @@ class NoteModel {
     this.colorId,
   });
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     return {
       'id': id,
       'title': title,
@@ -23,13 +23,18 @@ class NoteModel {
     };
   }
 
-  factory NoteModel.fromMap(Map<String, dynamic> map) {
+  factory NoteModel.fromJson(Map<String, dynamic> json) {
     return NoteModel(
-      id: map['id'] as String,
-      title: map['title'] as String,
-      content: map['content'] as String,
-      date: map['date'] as String,
-      colorId: map['colorId'] as int,
+      id: json['id'] as String,
+      title: json['title'] as String,
+      content: json['content'] as String,
+      date: json['date'] as String,
+      colorId: json['colorId'] as int,
     );
+  }
+
+  @override
+  String toString() {
+    return 'NoteModel{id: $id, title: $title, content: $content, date: $date, colorId: $colorId}';
   }
 }

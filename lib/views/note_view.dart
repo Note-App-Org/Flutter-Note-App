@@ -1,8 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/components/note_card.dart';
+import 'package:note_app/res/colors.dart';
 import 'package:note_app/view_model/note_view_model.dart';
+import 'package:note_app/views/new_note_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
+import 'package:page_transition/page_transition.dart';
+import '../models/note_model.dart';
+import '../view_model/new_note_view_model.dart';
 
 class NoteView extends StatefulWidget {
   const NoteView({Key? key}) : super(key: key);
@@ -12,11 +19,10 @@ class NoteView extends StatefulWidget {
 }
 
 class _NoteViewState extends State<NoteView> {
-
   @override
   void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) async{
-      await Provider.of<NoteViewModel>(context,listen: false).getNotes();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      Provider.of<NoteViewModel>(context, listen: false).getNotes();
     });
     super.initState();
   }
@@ -51,33 +57,40 @@ class _NoteViewState extends State<NoteView> {
               ),
             ],
           ),
-          body: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: StreamBuilder(
-             builder: (BuildContext context,snapshot){
-               return StaggeredGrid.count(
-                 crossAxisCount: 2,
-                 mainAxisSpacing: 8.0,
-                 crossAxisSpacing: 8.0,
-                 children: [
-                   NoteCard(
-                     title: "Title 1",
-                     content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                   ), NoteCard(
-                     title: "Title 1",
-                     content: " like Aldus PageMaker including versions of Lorem Ipsum.",
-                   ), NoteCard(
-                     title: "Title 1",
-                     content: "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-                   ),
-                   NoteCard(
-                     title: "Title 1",
-                     content: " like Aldus PageMaker including versions of Lorem Ipsum.",
-                   ),
-                 ],
-               );
-             },
-            ),
+          body: !provider.isLoading
+              ? Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: StaggeredGrid.count(
+                    crossAxisCount: 2,
+                    mainAxisSpacing: 8.0,
+                    crossAxisSpacing: 8.0,
+                    children: provider.noteList.map((note) {
+                      return NoteCard(
+                        note: note,
+                      );
+                    }).toList(),
+                  ),
+                )
+              : const Center(
+                  child: CircularProgressIndicator(),
+                ),
+          floatingActionButton: FloatingActionButton(
+            onPressed: () {
+              FirebaseAuth auth = FirebaseAuth.instance;
+              Navigator.push(
+                context,
+                PageTransition(
+                  type: PageTransitionType.scale,
+                  alignment: Alignment.bottomRight,
+                  child: ChangeNotifierProvider(
+                    create: (_) => NewNoteViewModel(),
+                    child:const NewNoteView(),
+                  ),
+                ),
+              );
+            },
+            backgroundColor: CustomColors.primaryColor,
+            child: const Icon(Icons.add),
           ),
         );
       },

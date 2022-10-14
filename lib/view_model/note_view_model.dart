@@ -9,13 +9,21 @@ class NoteViewModel with ChangeNotifier{
     notifyListeners();
   }
 
+  bool isLoading = true;
+
 
   List<NoteModel> noteList = [];
 
-  Future<void> getNotes()async{
+  void getNotes()async{
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    fireStore.collection('Notes').snapshots().listen((event) {
-      print(event);
+    fireStore.collection('notes').orderBy('date').snapshots().listen((event) {
+      noteList.clear();
+      for (var element in event.docs) {
+        NoteModel note = NoteModel.fromJson(element.data());
+        noteList.add(note);
+      }
+      isLoading = false;
+      notifyListeners();
     });
   }
 
