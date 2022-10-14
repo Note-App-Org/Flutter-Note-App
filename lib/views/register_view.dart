@@ -1,20 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:note_app/views/register_view.dart';
+import 'package:note_app/views/login_view.dart';
 
-class LoginView extends StatefulWidget {
-  const LoginView({super.key});
+class RegisterView extends StatefulWidget {
+  const RegisterView({super.key});
 
   @override
-  State<LoginView> createState() => _LoginViewState();
+  State<RegisterView> createState() => _RegisterViewState();
 }
 
-class _LoginViewState extends State<LoginView> {
+class _RegisterViewState extends State<RegisterView> {
+  late TextEditingController _usernameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
   @override
   void initState() {
+    _usernameController = TextEditingController();
     _emailController = TextEditingController();
     _passwordController = TextEditingController();
     super.initState();
@@ -22,12 +23,11 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   void dispose() {
+    _usernameController.dispose();
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
-
-  // GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -37,8 +37,13 @@ class _LoginViewState extends State<LoginView> {
         child: SingleChildScrollView(
           child: Container(
             width: width * 0.75,
-            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(35))),
-            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: Theme.of(context).textTheme.headline1!.color,
+              borderRadius: const BorderRadius.all(
+                Radius.circular(24.0),
+              ),
+            ),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 const CircleAvatar(
@@ -47,14 +52,34 @@ class _LoginViewState extends State<LoginView> {
                       "https://png.pngtree.com/png-vector/20210714/ourlarge/pngtree-man-study-e-learning-and-online-course-png-image_3583857.jpg"),
                 ),
                 const SizedBox(
-                  height: 10,
+                  height: 16,
                 ),
                 const Text(
-                  "Login",
-                  style: TextStyle(fontSize: 25),
+                  "Sign up",
+                  style: TextStyle(
+                    fontSize: 24.0,
+                  ),
                 ),
                 const SizedBox(
-                  height: 20,
+                  height: 16.0,
+                ),
+                TextField(
+                  controller: _usernameController,
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    border: OutlineInputBorder(
+                        borderRadius: BorderRadius.all(Radius.circular(20)),
+                        gapPadding: 20,
+                        borderSide: BorderSide(width: 50)),
+                    prefixIcon: Icon(Icons.person),
+                    label: Text("Username"),
+                  ),
+                ),
+                const SizedBox(
+                  height: 16.0,
+                ),
+                const SizedBox(
+                  height: 16.0,
                 ),
                 TextField(
                   controller: _emailController,
@@ -85,48 +110,33 @@ class _LoginViewState extends State<LoginView> {
                   ),
                 ),
                 const SizedBox(
-                  height: 16.0,
-                ),
-                Row(
-                  children: const [
-                    SizedBox(
-                      width: 160,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 16.0,
+                  height: 16,
                 ),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    onPressed: () async {
-
-
-                      //   print("22");
-                      // try{var authObject = FirebaseAuth.instance;
-                      //
-                      // UserCredential user =
-                      // await authObject.createUserWithEmailAndPassword(
-                      //     email: emailController.text,
-                      //     password: passwordController.text);
-                      // print(user);}catch(e){print("error"+e.toString());}
+                    style: ElevatedButton.styleFrom(
+                      shape: const StadiumBorder(),
+                    ),
+                    onPressed: () {
+                      /// TODO: Register new user
                     },
                     child: const Text(
-                      "Login",
+                      "Sign up",
                     ),
                   ),
                 ),
                 const SizedBox(
-                  height: 16.0,
+                  height: 16,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     const Text(
-                      "Do not have an account? ",
-                      style: TextStyle(color: Colors.grey),
+                      "Already have an account? ",
+                      style: TextStyle(
+                        color: Colors.grey,
+                      ),
                     ),
                     InkWell(
                       onTap: () {
@@ -134,20 +144,20 @@ class _LoginViewState extends State<LoginView> {
                           context,
                           MaterialPageRoute(
                             builder: (context) {
-                              return const RegisterView();
+                              return const LoginView();
                             },
                           ),
                         );
                       },
                       child: const Text(
-                        "Sign up",
+                        "Log in",
                         style: TextStyle(
                           color: Colors.black,
                         ),
                       ),
-                    )
+                    ),
                   ],
-                )
+                ),
               ],
             ),
           ),
