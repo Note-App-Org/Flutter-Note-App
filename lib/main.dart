@@ -47,11 +47,11 @@ class MyApp extends StatelessWidget {
               fontWeight: FontWeight.bold,fontSize: 24.0,
             ),
             headline2: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontWeight: FontWeight.bold,fontSize: 20.0,
             ),
             headline3: TextStyle(
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 18.0,
             ),
             headline4: TextStyle(

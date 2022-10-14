@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/components/note_card.dart';
@@ -8,7 +7,6 @@ import 'package:note_app/views/new_note_view.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:page_transition/page_transition.dart';
-import '../models/note_model.dart';
 import '../view_model/new_note_view_model.dart';
 
 class NoteView extends StatefulWidget {
@@ -49,8 +47,8 @@ class _NoteViewState extends State<NoteView> {
                     onChanged: (bool value) {
                       provider.setIsDark = value;
                     },
-                    activeThumbImage: const AssetImage('assets/images/dark_mode.png'),
-                    inactiveThumbImage: const AssetImage('assets/images/light_mode.png'),
+                    activeThumbImage: const AssetImage('assets/images/night_mode.png'),
+                    inactiveThumbImage: const AssetImage('assets/images/bright_mode.png'),
                     activeColor: Colors.white,
                   ),
                 ),
@@ -60,15 +58,17 @@ class _NoteViewState extends State<NoteView> {
           body: !provider.isLoading
               ? Padding(
                   padding: const EdgeInsets.all(8.0),
-                  child: StaggeredGrid.count(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 8.0,
-                    crossAxisSpacing: 8.0,
-                    children: provider.noteList.map((note) {
-                      return NoteCard(
-                        note: note,
-                      );
-                    }).toList(),
+                  child: SingleChildScrollView(
+                    child: StaggeredGrid.count(
+                      crossAxisCount: 2,
+                      mainAxisSpacing: 8.0,
+                      crossAxisSpacing: 8.0,
+                      children: provider.noteList.map((note) {
+                        return NoteCard(
+                          note: note,
+                        );
+                      }).toList(),
+                    ),
                   ),
                 )
               : const Center(
@@ -76,7 +76,6 @@ class _NoteViewState extends State<NoteView> {
                 ),
           floatingActionButton: FloatingActionButton(
             onPressed: () {
-              FirebaseAuth auth = FirebaseAuth.instance;
               Navigator.push(
                 context,
                 PageTransition(
@@ -84,7 +83,7 @@ class _NoteViewState extends State<NoteView> {
                   alignment: Alignment.bottomRight,
                   child: ChangeNotifierProvider(
                     create: (_) => NewNoteViewModel(),
-                    child:const NewNoteView(),
+                    child: const NewNoteView(),
                   ),
                 ),
               );
