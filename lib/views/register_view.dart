@@ -81,9 +81,6 @@ class _RegisterViewState extends State<RegisterView> {
                 const SizedBox(
                   height: 16.0,
                 ),
-                const SizedBox(
-                  height: 16.0,
-                ),
                 TextField(
                   controller: _emailController,
                   decoration: const InputDecoration(

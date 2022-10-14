@@ -28,8 +28,6 @@ class _LoginViewState extends State<LoginView> {
     super.dispose();
   }
 
-  // GlobalKey<FormState> formkey = GlobalKey<FormState>();
-
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
