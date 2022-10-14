@@ -62,6 +62,11 @@ class MyApp extends StatelessWidget {
                 color: Colors.black,
                 fontSize: 18.0,
               ),
+              headline5: TextStyle(
+                color: Colors.black,
+                fontStyle: FontStyle.italic,
+                fontSize: 15.0,
+              ),
             ),
           ),
           darkTheme: ThemeData(
@@ -71,7 +76,7 @@ class MyApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: CustomColors.primaryColor,
             ),
-            textTheme: const TextTheme(
+            textTheme:const  TextTheme(
               headline1: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -89,6 +94,11 @@ class MyApp extends StatelessWidget {
               headline4: TextStyle(
                 color: Colors.white,
                 fontSize: 18.0,
+              ),
+              headline5: TextStyle(
+                color: Colors.white,
+                fontStyle: FontStyle.italic,
+                fontSize: 15.0,
               ),
             ),
           ),

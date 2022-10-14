@@ -40,6 +40,7 @@ class NewNoteViewModel with ChangeNotifier{
     oldNote.title = title;
     oldNote.content = content;
     oldNote.colorId = colorId;
+    oldNote.date = DateTime.now().toIso8601String();
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     await fireStore.collection('notes').doc(oldNote.id).update(oldNote.toJson());
 

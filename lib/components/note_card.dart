@@ -48,6 +48,15 @@ class NoteCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.headline2,
               ),
+              Padding(
+                padding: const EdgeInsets.only(left: 2.0,top: 4.0),
+                child: Text(
+                  note.date!.split('T')[0].replaceAll('-', '/'),
+                  maxLines: 2,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.headline5,
+                ),
+              ),
               const SizedBox(height: 16.0,),
               Text(
                 note.content!,
