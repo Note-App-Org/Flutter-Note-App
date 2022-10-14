@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:note_app/views/note_view.dart';
 import 'package:note_app/views/register_view.dart';
 
 class LoginView extends StatefulWidget {
@@ -37,7 +38,9 @@ class _LoginViewState extends State<LoginView> {
         child: SingleChildScrollView(
           child: Container(
             width: width * 0.75,
-            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(35))),
+            decoration: const BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(35))),
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
@@ -100,18 +103,35 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    style:
+                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
                     onPressed: () async {
+                      try {
+                        FirebaseAuth authObject = FirebaseAuth.instance;
 
-
-                      //   print("22");
-                      // try{var authObject = FirebaseAuth.instance;
-                      //
-                      // UserCredential user =
-                      // await authObject.createUserWithEmailAndPassword(
-                      //     email: emailController.text,
-                      //     password: passwordController.text);
-                      // print(user);}catch(e){print("error"+e.toString());}
+                        UserCredential user =
+                            await authObject.signInWithEmailAndPassword(
+                                email: _emailController.text,
+                                password: _passwordController.text);
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => NoteView()));
+                      } on FirebaseAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(e.message.toString()),
+                              );
+                            });
+                      } catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(e.toString()),
+                              );
+                            });
+                      }
                     },
                     child: const Text(
                       "Login",

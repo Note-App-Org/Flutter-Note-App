@@ -1,5 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/views/login_view.dart';
+
+import 'note_view.dart';
 
 class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
@@ -118,8 +121,34 @@ class _RegisterViewState extends State<RegisterView> {
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
                     ),
-                    onPressed: () {
-                      /// TODO: Register new user
+                    onPressed: () async {
+                      try {
+                        FirebaseAuth authObject = FirebaseAuth.instance;
+
+                        UserCredential user =
+                            await authObject.createUserWithEmailAndPassword(
+                                email: _emailController.text,
+                                password: _passwordController.text);
+                        user.user!.updateDisplayName(_usernameController.text);
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (_) => NoteView()));
+                      } on FirebaseAuthException catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(e.message.toString()),
+                              );
+                            });
+                      } catch (e) {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                content: Text(e.toString()),
+                              );
+                            });
+                      }
                     },
                     child: const Text(
                       "Sign up",
