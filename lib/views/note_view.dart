@@ -58,7 +58,6 @@ class _NoteViewState extends State<NoteView> {
                 onPressed: () {
                   FirebaseAuth.instance.signOut();
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginView()));
-                  /// TODO: Logout
                 },
                 icon: Icon(
                   Icons.logout,
