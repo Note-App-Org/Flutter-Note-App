@@ -53,7 +53,15 @@ class _NoteViewState extends State<NoteView> {
                   ),
                 ),
               ),
-              IconButton(onPressed: (){}, icon:  Icon(Icons.logout,color: Theme.of(context).textTheme.headline1!.color,),),
+              IconButton(
+                onPressed: () {
+                  /// TODO: Logout
+                },
+                icon: Icon(
+                  Icons.logout,
+                  color: Theme.of(context).textTheme.headline1!.color,
+                ),
+              ),
             ],
           ),
           body: !provider.isLoading
@@ -81,7 +89,7 @@ class _NoteViewState extends State<NoteView> {
                 context,
                 PageTransition(
                   type: PageTransitionType.scale,
-                  duration:const Duration(milliseconds: 500),
+                  duration: const Duration(milliseconds: 500),
                   alignment: Alignment.bottomRight,
                   child: ChangeNotifierProvider(
                     create: (_) => NewNoteViewModel(),

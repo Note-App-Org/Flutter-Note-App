@@ -60,6 +60,7 @@ class _NewNoteViewState extends State<NewNoteView> {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        foregroundColor: Theme.of(context).textTheme.headline1!.color,
         actions: [
           Padding(
             padding: const EdgeInsets.all(8.0),
@@ -89,7 +90,6 @@ class _NewNoteViewState extends State<NewNoteView> {
               child: const Text('Save'),
             ),
           ),
-
         ],
       ),
       body: ExpandableBottomSheet(
@@ -137,7 +137,30 @@ class _NewNoteViewState extends State<NewNoteView> {
                     children: [
                       IconButton(
                         onPressed: () {
-                          _viewModel.deleteNote(noteId: note!.id!, context: context);
+                          showDialog(
+                              context: context,
+                              builder: (ctx) {
+                                return AlertDialog(
+                                  backgroundColor: Theme.of(context).cardColor,
+                                  title: const Text('Are you sure?',style: TextStyle(color: Colors.white),),
+                                  actions: [
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(ctx);
+                                      },
+                                      child: const Text('No'),
+                                    ),
+                                    ElevatedButton(
+                                      onPressed: () {
+                                        Navigator.pop(ctx);
+                                        _viewModel.deleteNote(noteId: note!.id!, context: context);
+                                      },
+                                      style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
+                                      child: const Text('Yes'),
+                                    ),
+                                  ],
+                                );
+                              });
                         },
                         iconSize: 32.0,
                         icon: const Icon(
