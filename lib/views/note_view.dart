@@ -80,6 +80,7 @@ class _NoteViewState extends State<NoteView> {
                 context,
                 PageTransition(
                   type: PageTransitionType.scale,
+                  duration:const Duration(milliseconds: 500),
                   alignment: Alignment.bottomRight,
                   child: ChangeNotifierProvider(
                     create: (_) => NewNoteViewModel(),

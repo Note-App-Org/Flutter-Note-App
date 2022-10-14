@@ -29,7 +29,7 @@ class NewNoteViewModel with ChangeNotifier{
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
     await fireStore.collection('notes').doc(randomId).set(note.toJson());
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note added')));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note added'),duration: Duration(seconds: 1),));
   }
 
   Future<void> updateNote({required String title, required String content,required int colorId,required NoteModel oldNote,required BuildContext context}) async {
@@ -43,7 +43,7 @@ class NewNoteViewModel with ChangeNotifier{
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     await fireStore.collection('notes').doc(oldNote.id).update(oldNote.toJson());
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note updated')));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note updated'),duration: Duration(seconds: 1),));
   }
 
 
@@ -51,7 +51,7 @@ class NewNoteViewModel with ChangeNotifier{
 
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     await fireStore.collection('notes').doc(noteId).delete();
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note deleted')));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note deleted'),duration: Duration(seconds: 1),));
     Navigator.pop(context);
   }
 

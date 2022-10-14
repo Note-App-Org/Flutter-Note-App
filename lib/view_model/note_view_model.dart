@@ -11,7 +11,6 @@ class NoteViewModel with ChangeNotifier{
 
   bool isLoading = true;
 
-
   List<NoteModel> noteList = [];
 
   void getNotes()async{
