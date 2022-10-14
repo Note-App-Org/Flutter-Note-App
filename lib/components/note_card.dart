@@ -21,6 +21,7 @@ class NoteCard extends StatelessWidget {
           PageTransition(
             type: PageTransitionType.scale,
             alignment: Alignment.center,
+            duration: const Duration(milliseconds: 500),
             child: ChangeNotifierProvider(
               create: (_) => NewNoteViewModel(),
               child: NewNoteView(
@@ -47,6 +48,7 @@ class NoteCard extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: Theme.of(context).textTheme.headline2,
               ),
+              const SizedBox(height: 16.0,),
               Text(
                 note.content!,
                 maxLines: 10,
