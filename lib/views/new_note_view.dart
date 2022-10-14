@@ -89,6 +89,7 @@ class _NewNoteViewState extends State<NewNoteView> {
               child: const Text('Save'),
             ),
           ),
+
         ],
       ),
       body: ExpandableBottomSheet(

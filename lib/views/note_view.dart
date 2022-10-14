@@ -53,6 +53,7 @@ class _NoteViewState extends State<NoteView> {
                   ),
                 ),
               ),
+              IconButton(onPressed: (){}, icon:  Icon(Icons.logout,color: Theme.of(context).textTheme.headline1!.color,),),
             ],
           ),
           body: !provider.isLoading
