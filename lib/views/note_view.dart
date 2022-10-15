@@ -56,7 +56,6 @@ class _NoteViewState extends State<NoteView> {
               ),
               IconButton(
                 onPressed: () {
-
                   provider.logout();
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginView()));
                 },

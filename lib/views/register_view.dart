@@ -53,9 +53,13 @@ class _RegisterViewState extends State<RegisterView> {
             child: Column(
               children: [
                 const CircleAvatar(
-                  radius: 50,
-                  backgroundImage: NetworkImage(
-                      "https://png.pngtree.com/png-vector/20210714/ourlarge/pngtree-man-study-e-learning-and-online-course-png-image_3583857.jpg"),
+                  backgroundColor: Colors.grey,
+                  radius: 55,
+                  child:  CircleAvatar(
+                    radius: 50,
+                    backgroundImage: AssetImage(
+                        "assets/images/login.gif"),
+                  ),
                 ),
                 const SizedBox(
                   height: 16,
