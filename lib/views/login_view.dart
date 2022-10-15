@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:note_app/res/colors.dart';
 import 'package:note_app/views/note_view.dart';
 import 'package:note_app/views/register_view.dart';
 
@@ -13,6 +14,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -103,8 +106,11 @@ class _LoginViewState extends State<LoginView> {
                   child: ElevatedButton(
                     style:
                         ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    onPressed: () async {
+                    onPressed:isLoading?null: () async {
                       try {
+                        setState(() {
+                          isLoading = true;
+                        });
                         FirebaseAuth authObject = FirebaseAuth.instance;
 
                         UserCredential user =
@@ -129,11 +135,15 @@ class _LoginViewState extends State<LoginView> {
                                 content: Text(e.toString()),
                               );
                             });
+                      }finally{
+                        setState(() {
+                          isLoading = false;
+                        });
                       }
                     },
-                    child: const Text(
+                    child:!isLoading?  const Text(
                       "Login",
-                    ),
+                    ):const CircularProgressIndicator(color: CustomColors.cardColor,),
                   ),
                 ),
                 const SizedBox(

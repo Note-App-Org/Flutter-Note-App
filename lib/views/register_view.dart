@@ -16,6 +16,8 @@ class _RegisterViewState extends State<RegisterView> {
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
 
+  bool isLoading = false;
+
   @override
   void initState() {
     _usernameController = TextEditingController();
