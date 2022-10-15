@@ -56,7 +56,8 @@ class _NoteViewState extends State<NoteView> {
               ),
               IconButton(
                 onPressed: () {
-                  FirebaseAuth.instance.signOut();
+
+                  provider.logout();
                   Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const LoginView()));
                 },
                 icon: Icon(
@@ -76,6 +77,7 @@ class _NoteViewState extends State<NoteView> {
                       crossAxisSpacing: 8.0,
                       children: provider.noteList.map((note) {
                         return NoteCard(
+                          userId: provider.userId!,
                           note: note,
                         );
                       }).toList(),
@@ -95,7 +97,7 @@ class _NoteViewState extends State<NoteView> {
                   alignment: Alignment.bottomRight,
                   child: ChangeNotifierProvider(
                     create: (_) => NewNoteViewModel(),
-                    child: const NewNoteView(),
+                    child:  NewNoteView(userId: provider.userId!,),
                   ),
                 ),
               );

@@ -8,8 +8,10 @@ import '../view_model/new_note_view_model.dart';
 import '../views/new_note_view.dart';
 
 class NoteCard extends StatelessWidget {
-  const NoteCard({Key? key, required this.note}) : super(key: key);
+  const NoteCard({Key? key, required this.userId,required this.note}) : super(key: key);
 
+
+  final String userId;
   final NoteModel note;
 
   @override
@@ -25,6 +27,7 @@ class NoteCard extends StatelessWidget {
             child: ChangeNotifierProvider(
               create: (_) => NewNoteViewModel(),
               child: NewNoteView(
+                userId: userId,
                 note: note,
               ),
             ),

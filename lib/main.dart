@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:note_app/view_model/note_view_model.dart';
 import 'package:note_app/views/login_view.dart';
+import 'package:note_app/views/note_view.dart';
 import 'package:note_app/views/register_view.dart';
 import 'package:provider/provider.dart';
 import 'res/colors.dart';
@@ -33,14 +34,11 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-
   @override
   void initState() {
-    FirebaseAuth.instance
-        .authStateChanges()
-        .listen((User? user) {
+    FirebaseAuth.instance.authStateChanges().listen((User? user) {
       if (user != null) {
-        print(user.uid);
+        Provider.of<NoteViewModel>(context, listen: false).setUserId = user.uid;
       }
     });
     super.initState();
@@ -94,7 +92,7 @@ class _MyAppState extends State<MyApp> {
             colorScheme: ColorScheme.fromSwatch().copyWith(
               primary: CustomColors.primaryColor,
             ),
-            textTheme:const  TextTheme(
+            textTheme: const TextTheme(
               headline1: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
@@ -120,7 +118,11 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ),
-          home: const LoginView(),
+          home: Consumer<NoteViewModel>(
+            builder: (BuildContext context, NoteViewModel provider, _) {
+              return provider.userId == null ? const LoginView() : const NoteView();
+            },
+          ),
         );
       },
     );
