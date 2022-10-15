@@ -6,7 +6,9 @@ import 'package:provider/provider.dart';
 import '../view_model/new_note_view_model.dart';
 
 class NewNoteView extends StatefulWidget {
-  const NewNoteView({Key? key, this.note}) : super(key: key);
+  const NewNoteView({Key? key,required this.userId ,this.note}) : super(key: key);
+
+  final String userId;
 
   final NoteModel? note;
 
@@ -72,6 +74,7 @@ class _NewNoteViewState extends State<NewNoteView> {
               onPressed: () async {
                 if (note == null) {
                   await _viewModel.addNote(
+                    userId: widget.userId,
                     context: context,
                     title: _titleController.text,
                     content: _contentController.text,
@@ -79,6 +82,7 @@ class _NewNoteViewState extends State<NewNoteView> {
                   );
                 } else {
                   await _viewModel.updateNote(
+                    userId: widget.userId,
                     context: context,
                     title: _titleController.text,
                     content: _contentController.text,
@@ -153,7 +157,7 @@ class _NewNoteViewState extends State<NewNoteView> {
                                     ElevatedButton(
                                       onPressed: () {
                                         Navigator.pop(ctx);
-                                        _viewModel.deleteNote(noteId: note!.id!, context: context);
+                                        _viewModel.deleteNote(userId: widget.userId,noteId: note!.id!, context: context,);
                                       },
                                       style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
                                       child: const Text('Yes'),
