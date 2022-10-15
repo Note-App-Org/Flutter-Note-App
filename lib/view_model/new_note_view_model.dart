@@ -2,18 +2,21 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/models/note_model.dart';
 
-class NewNoteViewModel with ChangeNotifier{
-
+class NewNoteViewModel with ChangeNotifier {
   int currentColorId = 1;
 
-  set setCurrentColorId(int newValue){
+  set setCurrentColorId(int newValue) {
     currentColorId = newValue;
     notifyListeners();
   }
 
   bool isSaved = false;
 
-  Future<void> addNote({required String title, required String content,required int colorId,required BuildContext context}) async {
+  Future<void> addNote(
+      {required String title,
+      required String content,
+      required int colorId,
+      required BuildContext context}) async {
     if (title.isEmpty && content.isEmpty) {
       return;
     }
@@ -29,10 +32,18 @@ class NewNoteViewModel with ChangeNotifier{
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
     await fireStore.collection('notes').doc(randomId).set(note.toJson());
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note added'),duration: Duration(seconds: 1),));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Note added'),
+      duration: Duration(seconds: 1),
+    ));
   }
 
-  Future<void> updateNote({required String title, required String content,required int colorId,required NoteModel oldNote,required BuildContext context}) async {
+  Future<void> updateNote(
+      {required String title,
+      required String content,
+      required int colorId,
+      required NoteModel oldNote,
+      required BuildContext context}) async {
     if (title.isEmpty && content.isEmpty) {
       return;
     }
@@ -42,18 +53,25 @@ class NewNoteViewModel with ChangeNotifier{
     oldNote.colorId = colorId;
     oldNote.date = DateTime.now().toIso8601String();
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    await fireStore.collection('notes').doc(oldNote.id).update(oldNote.toJson());
+    await fireStore
+        .collection('notes')
+        .doc(oldNote.id)
+        .update(oldNote.toJson());
 
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note updated'),duration: Duration(seconds: 1),));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Note updated'),
+      duration: Duration(seconds: 1),
+    ));
   }
 
-
-  Future<void> deleteNote({required String noteId,required BuildContext context}) async {
-
+  Future<void> deleteNote(
+      {required String noteId, required BuildContext context}) async {
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     await fireStore.collection('notes').doc(noteId).delete();
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('Note deleted'),duration: Duration(seconds: 1),));
+    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text('Note deleted'),
+      duration: Duration(seconds: 1),
+    ));
     Navigator.pop(context);
   }
-
 }
