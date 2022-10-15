@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:note_app/res/colors.dart';
 import 'package:note_app/views/login_view.dart';
 
 import 'note_view.dart';
@@ -15,6 +16,7 @@ class _RegisterViewState extends State<RegisterView> {
   late TextEditingController _usernameController;
   late TextEditingController _emailController;
   late TextEditingController _passwordController;
+  bool isLoading = false;
 
   @override
   void initState() {
@@ -121,7 +123,10 @@ class _RegisterViewState extends State<RegisterView> {
                     style: ElevatedButton.styleFrom(
                       shape: const StadiumBorder(),
                     ),
-                    onPressed: () async {
+                    onPressed: isLoading? null: () async {
+                      setState(() {
+                        isLoading = true;
+                      });
                       try {
                         FirebaseAuth authObject = FirebaseAuth.instance;
 
@@ -148,11 +153,17 @@ class _RegisterViewState extends State<RegisterView> {
                                 content: Text(e.toString()),
                               );
                             });
-                      }
-                    },
-                    child: const Text(
-                      "Sign up",
-                    ),
+                      }finally{setState(() {
+                        isLoading = false;
+                      });
+                    }},
+                    child: !isLoading
+                        ? const Text(
+                            "Sign up",
+                          )
+                        : const CircularProgressIndicator(
+                            color: CustomColors.cardColor,
+                          ),
                   ),
                 ),
                 const SizedBox(
