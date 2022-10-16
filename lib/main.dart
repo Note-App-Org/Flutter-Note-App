@@ -14,12 +14,8 @@ Future<void> main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   runApp(
-    MultiProvider(
-      providers: [
-        ChangeNotifierProvider(
-          create: (_) => NoteViewModel(),
-        ),
-      ],
+    ChangeNotifierProvider(
+      create: (_) => NoteViewModel(),
       child: const MyApp(),
     ),
   );
