@@ -1,4 +1,3 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:note_app/components/note_card.dart';
 import 'package:note_app/res/colors.dart';

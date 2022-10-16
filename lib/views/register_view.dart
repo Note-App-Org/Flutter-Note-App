@@ -136,9 +136,11 @@ class _RegisterViewState extends State<RegisterView> {
                             await authObject.createUserWithEmailAndPassword(
                                 email: _emailController.text,
                                 password: _passwordController.text);
-                        user.user!.updateDisplayName(_usernameController.text);
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => NoteView()));
+                        user.user!.updateDisplayName(_usernameController.text).then((_) {
+                          Navigator.pushReplacement(context,
+                              MaterialPageRoute(builder: (_) => const NoteView()));
+                        });
+
                       } on FirebaseAuthException catch (e) {
                         showDialog(
                             context: context,

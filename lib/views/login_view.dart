@@ -39,19 +39,16 @@ class _LoginViewState extends State<LoginView> {
         child: SingleChildScrollView(
           child: Container(
             width: width * 0.75,
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(35))),
+            decoration: const BoxDecoration(color: Colors.white, borderRadius: BorderRadius.all(Radius.circular(35))),
             padding: const EdgeInsets.all(20),
             child: Column(
               children: [
                 const CircleAvatar(
                   backgroundColor: Colors.grey,
                   radius: 55,
-                  child:  CircleAvatar(
+                  child: CircleAvatar(
                     radius: 50,
-                    backgroundImage: AssetImage(
-                        "assets/images/login.gif"),
+                    backgroundImage: AssetImage("assets/images/login.gif"),
                   ),
                 ),
                 const SizedBox(
@@ -108,46 +105,51 @@ class _LoginViewState extends State<LoginView> {
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton(
-                    style:
-                        ElevatedButton.styleFrom(shape: const StadiumBorder()),
-                    onPressed:isLoading?null: () async {
-                      try {
-                        setState(() {
-                          isLoading = true;
-                        });
-                        FirebaseAuth authObject = FirebaseAuth.instance;
+                    style: ElevatedButton.styleFrom(shape: const StadiumBorder()),
+                    onPressed: isLoading
+                        ? null
+                        : () async {
+                            try {
+                              setState(() {
+                                isLoading = true;
+                              });
+                              FirebaseAuth authObject = FirebaseAuth.instance;
 
-                        UserCredential user =
-                            await authObject.signInWithEmailAndPassword(
-                                email: _emailController.text,
-                                password: _passwordController.text);
-                        Navigator.pushReplacement(context,
-                            MaterialPageRoute(builder: (_) => NoteView()));
-                      } on FirebaseAuthException catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(e.message.toString()),
-                              );
-                            });
-                      } catch (e) {
-                        showDialog(
-                            context: context,
-                            builder: (context) {
-                              return AlertDialog(
-                                content: Text(e.toString()),
-                              );
-                            });
-                      }finally{
-                        setState(() {
-                          isLoading = false;
-                        });
-                      }
-                    },
-                    child:!isLoading?  const Text(
-                      "Login",
-                    ):const CircularProgressIndicator(color: CustomColors.cardColor,),
+                              await authObject
+                                  .signInWithEmailAndPassword(
+                                      email: _emailController.text, password: _passwordController.text)
+                                  .then((_) {
+                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const NoteView()));
+                              });
+                            } on FirebaseAuthException catch (e) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Text(e.message.toString()),
+                                    );
+                                  });
+                            } catch (e) {
+                              showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return AlertDialog(
+                                      content: Text(e.toString()),
+                                    );
+                                  });
+                            } finally {
+                              setState(() {
+                                isLoading = false;
+                              });
+                            }
+                          },
+                    child: !isLoading
+                        ? const Text(
+                            "Login",
+                          )
+                        : const CircularProgressIndicator(
+                            color: CustomColors.cardColor,
+                          ),
                   ),
                 ),
                 const SizedBox(

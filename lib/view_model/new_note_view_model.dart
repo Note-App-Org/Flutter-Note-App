@@ -30,13 +30,15 @@ class NewNoteViewModel with ChangeNotifier {
       date: DateTime.now().toIso8601String(),
       colorId: colorId,
     );
-    FirebaseFirestore fireStore = FirebaseFirestore.instance;
 
-    await fireStore.collection('$userId-notes').doc(randomId).set(note.toJson());
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Note added'),
-      duration: Duration(seconds: 1),
-    ));
+    FirebaseFirestore fireStore = FirebaseFirestore.instance;
+    await fireStore.collection('$userId-notes').doc(randomId).set(note.toJson()).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Note added'),
+        duration: Duration(seconds: 1),
+      ));
+    });
+
   }
 
   Future<void> updateNote(
@@ -55,21 +57,23 @@ class NewNoteViewModel with ChangeNotifier {
     oldNote.colorId = colorId;
     oldNote.date = DateTime.now().toIso8601String();
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    await fireStore.collection('$userId-notes').doc(oldNote.id).update(oldNote.toJson());
-
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Note updated'),
-      duration: Duration(seconds: 1),
-    ));
+    await fireStore.collection('$userId-notes').doc(oldNote.id).update(oldNote.toJson()).then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Note updated'),
+        duration: Duration(seconds: 1),
+      ));
+    });
   }
 
   Future<void> deleteNote({required String userId,required String noteId, required BuildContext context}) async {
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
-    await fireStore.collection('$userId-notes').doc(noteId).delete();
-    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      content: Text('Note deleted'),
-      duration: Duration(seconds: 1),
-    ));
-    Navigator.pop(context);
+    await fireStore.collection('$userId-notes').doc(noteId).delete().then((_) {
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+        content: Text('Note deleted'),
+        duration: Duration(seconds: 1),
+      ));
+      Navigator.pop(context);
+    });
+
   }
 }

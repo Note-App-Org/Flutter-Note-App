@@ -15,7 +15,6 @@ class NoteViewModel with ChangeNotifier{
   List<NoteModel> noteList = [];
 
   void getNotes()async{
-    print(userId);
     FirebaseFirestore fireStore = FirebaseFirestore.instance;
     fireStore.collection('$userId-notes').orderBy('date').snapshots().listen((event) {
       noteList.clear();
@@ -33,7 +32,6 @@ class NoteViewModel with ChangeNotifier{
     userId = newValue;
     notifyListeners();
   }
-
 
   void logout(){
     FirebaseAuth.instance.signOut();
