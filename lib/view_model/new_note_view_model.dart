@@ -74,6 +74,5 @@ class NewNoteViewModel with ChangeNotifier {
       ));
       Navigator.pop(context);
     });
-
   }
 }

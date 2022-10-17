@@ -114,12 +114,15 @@ class _LoginViewState extends State<LoginView> {
                                 isLoading = true;
                               });
                               FirebaseAuth authObject = FirebaseAuth.instance;
-
                               await authObject
                                   .signInWithEmailAndPassword(
                                       email: _emailController.text, password: _passwordController.text)
                                   .then((_) {
-                                Navigator.pushReplacement(context, MaterialPageRoute(builder: (_) => const NoteView()));
+                                Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (_) => const NoteView(),
+                                    ));
                               });
                             } on FirebaseAuthException catch (e) {
                               showDialog(

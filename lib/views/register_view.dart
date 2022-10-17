@@ -131,7 +131,6 @@ class _RegisterViewState extends State<RegisterView> {
                       });
                       try {
                         FirebaseAuth authObject = FirebaseAuth.instance;
-
                         UserCredential user =
                             await authObject.createUserWithEmailAndPassword(
                                 email: _emailController.text,
@@ -140,7 +139,6 @@ class _RegisterViewState extends State<RegisterView> {
                           Navigator.pushReplacement(context,
                               MaterialPageRoute(builder: (_) => const NoteView()));
                         });
-
                       } on FirebaseAuthException catch (e) {
                         showDialog(
                             context: context,
